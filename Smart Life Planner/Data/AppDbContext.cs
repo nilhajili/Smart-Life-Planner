@@ -1,0 +1,53 @@
+using Microsoft.EntityFrameworkCore;
+using SmartLifePlanner.Models;
+namespace Smart_Life_Planner.Data;
+public class AppDbContext : DbContext
+{
+    public AppDbContext(DbContextOptions<AppDbContext> options)
+        : base(options)
+    {
+    }
+    public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Subject> Subjects { get; set; } = null!;
+    public DbSet<SmartLifePlanner.Models.Task> Tasks { get; set; } = null!;
+    public DbSet<StudyGoal> StudyGoals { get; set; } = null!;
+    public DbSet<WorkDay> WorkDays { get; set; } = null!;
+    public DbSet<IncomeGoal> IncomeGoals { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Subjects)
+            .WithOne(s => s.User)
+            .HasForeignKey(s => s.UserId)
+            .OnDelete(DeleteBehavior.Restrict);;
+        
+
+        modelBuilder.Entity<Subject>()
+            .HasMany(s => s.Tasks)
+            .WithOne(t => t.Subject)
+            .HasForeignKey(t => t.SubjectId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.Tasks)
+            .WithOne(t => t.User)
+            .HasForeignKey(t => t.UserId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.StudyGoals)
+            .WithOne(g => g.User)
+            .HasForeignKey(g => g.UserId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.WorkDays)
+            .WithOne(w => w.User)
+            .HasForeignKey(w => w.UserId);
+
+        modelBuilder.Entity<User>()
+            .HasMany(u => u.IncomeGoals)
+            .WithOne(i => i.User)
+            .HasForeignKey(i => i.UserId); 
+    }
+}

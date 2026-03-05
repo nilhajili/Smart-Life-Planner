@@ -16,6 +16,8 @@ namespace SmartLifePlanner.Models
         public ICollection<StudyGoal> StudyGoals { get; set; } = new List<StudyGoal>();
         public ICollection<WorkDay> WorkDays { get; set; } = new List<WorkDay>();
         public ICollection<IncomeGoal> IncomeGoals { get; set; } = new List<IncomeGoal>();
+        
+        public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
     public enum UserRole
     {

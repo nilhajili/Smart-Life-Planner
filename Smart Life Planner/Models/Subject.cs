@@ -10,5 +10,7 @@ namespace SmartLifePlanner.Models
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
         public ICollection<Task> Tasks { get; set; } = new List<Task>();
+        public ICollection<StudyGoal> StudyGoals { get; set; } = new List<StudyGoal>();
     }
+    
 }

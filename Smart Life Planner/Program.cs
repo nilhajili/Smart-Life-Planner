@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<IStudentService, StudentService>();
 #endregion
 
 #region Controllers

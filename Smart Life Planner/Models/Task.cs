@@ -11,7 +11,7 @@ namespace SmartLifePlanner.Models
         public Guid UserId { get; set; }
         public User User { get; set; } = null!;
         public DateTime? Deadline { get; set; }
-        public string Status { get; set; } = "Pending"; 
+        public TaskStatus Status { get; set; } = TaskStatus.Pending;
     }
     public enum TaskStatus
     {

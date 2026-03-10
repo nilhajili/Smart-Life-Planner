@@ -5,7 +5,7 @@ using SmartLifePlanner.Services.Interfaces;
 
 namespace SmartLifePlanner.Controllers
 {
-    [Authorize]
+  
     [ApiController]
     [Route("api/[controller]")]
     public class StudyGoalController : ControllerBase
@@ -24,11 +24,14 @@ namespace SmartLifePlanner.Controllers
             return Ok(result);
         }
         
-        [HttpPatch("{goalId}/add-hours")]
-        public async Task<ActionResult<StudyGoalResponseDto>> AddHours(Guid goalId, [FromQuery] int hours)
+        [HttpPost("{goalId}/add-hours")]
+        public async Task<IActionResult> AddHours(Guid goalId, int hours)
         {
-            var result = await _studentService.UpdateCurrentHoursAsync(goalId, hours);
-            return Ok(result);
+            var updatedGoal = await _studentService.UpdateCurrentHoursAsync(goalId, hours);
+            if (updatedGoal == null) 
+                return NotFound("Study goal not found");
+
+            return Ok(updatedGoal);
         }
         [HttpGet("{goalId}/progress")]
         public async Task<ActionResult<double>> GetProgress(Guid goalId)

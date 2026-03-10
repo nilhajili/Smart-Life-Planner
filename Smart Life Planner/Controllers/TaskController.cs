@@ -5,7 +5,7 @@ using SmartLifePlanner.Services.Interfaces;
 
 namespace SmartLifePlanner.Controllers
 {
-    [Authorize]
+
     [ApiController]
     [Route("api/[controller]")]
     public class TaskController : ControllerBase

@@ -96,6 +96,9 @@ namespace Smart_Life_Planner.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("TargetHours")
                         .HasColumnType("int");
 
@@ -103,6 +106,8 @@ namespace Smart_Life_Planner.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SubjectId");
 
                     b.HasIndex("UserId");
 
@@ -142,9 +147,8 @@ namespace Smart_Life_Planner.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
@@ -237,6 +241,12 @@ namespace Smart_Life_Planner.Migrations
 
             modelBuilder.Entity("SmartLifePlanner.Models.StudyGoal", b =>
                 {
+                    b.HasOne("SmartLifePlanner.Models.Subject", null)
+                        .WithMany("StudyGoals")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SmartLifePlanner.Models.User", "User")
                         .WithMany("StudyGoals")
                         .HasForeignKey("UserId")
@@ -289,6 +299,8 @@ namespace Smart_Life_Planner.Migrations
 
             modelBuilder.Entity("SmartLifePlanner.Models.Subject", b =>
                 {
+                    b.Navigation("StudyGoals");
+
                     b.Navigation("Tasks");
                 });
 

@@ -122,6 +122,7 @@ public class AuthService : IAuthService
             ExpiresAt = DateTime.UtcNow.AddMinutes(accessExpirationMinutes),
             RefreshToken = refreshJwt,
             RefreshTokenExpiresAt = refreshEntity.ExpiresAt,
+            UserId = user.Id,
             Email = user.Email,
             Roles = new List<string> { user.Role.ToString() }
         };

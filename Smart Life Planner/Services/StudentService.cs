@@ -103,10 +103,10 @@ public class StudentService : IStudentService
         };
     }
 
-    public async Task<StudyGoalResponseDto> UpdateCurrentHoursAsync(Guid goalId, int hours)
+    public async Task<StudyGoalResponseDto?> UpdateCurrentHoursAsync(Guid goalId, int hours)
     {
         var goal = await _context.StudyGoals.FirstOrDefaultAsync(x => x.Id == goalId);
-        if (goal == null) throw new Exception("Goal not found");
+        if (goal == null) return null;
 
         goal.CurrentHours += hours;
         await _context.SaveChangesAsync();

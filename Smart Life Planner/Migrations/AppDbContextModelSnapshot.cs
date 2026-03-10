@@ -261,7 +261,7 @@ namespace Smart_Life_Planner.Migrations
                     b.HasOne("SmartLifePlanner.Models.User", "User")
                         .WithMany("Subjects")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

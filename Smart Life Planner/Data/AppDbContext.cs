@@ -23,8 +23,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.Subjects)
             .WithOne(s => s.User)
-            .HasForeignKey(s => s.UserId)
-            .OnDelete(DeleteBehavior.Restrict);;
+            .HasForeignKey(s => s.UserId);
+        
         
 
         modelBuilder.Entity<Subject>()
@@ -45,16 +45,25 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.WorkDays)
             .WithOne(w => w.User)
-            .HasForeignKey(w => w.UserId);
+            .HasForeignKey(w => w.UserId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.IncomeGoals)
             .WithOne(i => i.User)
-            .HasForeignKey(i => i.UserId); 
+            .HasForeignKey(i => i.UserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         modelBuilder.Entity<RefreshToken>()
-            .HasOne<User>(rt => rt.User)  
+            .HasOne<User>(rt => rt.User)
             .WithMany(u => u.RefreshTokens)
-            .HasForeignKey(rt => rt.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(rt => rt.UserId);
+        modelBuilder.Entity<IncomeGoal>()
+            .Property(i => i.TargetAmount)
+            .HasPrecision(18, 2);
+
+        modelBuilder.Entity<IncomeGoal>()
+            .Property(i => i.CurrentAmount)
+            .HasPrecision(18, 2);
     }
 }

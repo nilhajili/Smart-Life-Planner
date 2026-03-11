@@ -7,6 +7,7 @@ using SmartLifePlanner.Services.Interfaces;
 using Microsoft.OpenApi;
 using System.Text;
 using Microsoft.OpenApi.Models;
+using SmartLifePlanner.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 #region Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IIncomeGoalService, IncomeGoalService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IWorkDayService, WorkDayService>();
 #endregion
 
 #region JWT Configuration
@@ -45,7 +49,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<IStudentService, StudentService>();
+
 #endregion
 
 #region Controllers

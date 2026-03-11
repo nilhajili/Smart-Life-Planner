@@ -10,12 +10,12 @@ public class Task
     public Guid SubjectId { get; set; }
 
     [JsonIgnore]   
-    public Subject Subject { get; set; } = null!;
+    public Subject? Subject { get; set; } 
 
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
 
     [JsonIgnore]    
-    public User User { get; set; } = null!;
+    public User? User { get; set; } 
 
     public DateTime? Deadline { get; set; }
     public TaskStatus Status { get; set; } = TaskStatus.Pending;

@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using SmartLifePlanner.DTOs;
 using SmartLifePlanner.Services.Interfaces;
 
+
 namespace SmartLifePlanner.Controllers
 {
-  
+    [Authorize(Roles = "Student,Both")]
     [ApiController]
     [Route("api/[controller]")]
     public class StudyGoalController : ControllerBase

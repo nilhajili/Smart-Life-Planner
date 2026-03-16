@@ -4,9 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using SmartLifePlanner.Data;
 using SmartLifePlanner.Services;
 using SmartLifePlanner.Services.Interfaces;
-using Microsoft.OpenApi;
-using System.Text;
 using Microsoft.OpenApi.Models;
+using System.Text;
 using SmartLifePlanner.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,7 +48,6 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddAuthorization();
-
 #endregion
 
 #region Controllers
@@ -93,6 +91,18 @@ builder.Services.AddSwaggerGen(options =>
 });
 #endregion
 
+#region CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+#endregion
+
 var app = builder.Build();
 
 #region Middleware
@@ -103,6 +113,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseCors("AllowAll");
 
 app.UseAuthentication();
 app.UseAuthorization();

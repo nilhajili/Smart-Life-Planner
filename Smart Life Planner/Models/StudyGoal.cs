@@ -8,7 +8,8 @@ namespace SmartLifePlanner.Models
         public Guid? UserId { get; set; }
         public User? User { get; set; }
 
-        public Guid SubjectId { get; set; }  
+        public Guid SubjectId { get; set; }
+        public Subject? Subject { get; set; }
 
         public int TargetHours { get; set; }  
         public int CurrentHours { get; set; } 

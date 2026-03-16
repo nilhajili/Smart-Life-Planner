@@ -19,4 +19,6 @@ public interface IStudentService
     Task<Subject?> GetSubjectByIdAsync(Guid subjectId);
 
     Task<double> GetProgressAsync(Guid goalId);
+    
+    Task<StudentStatisticsDto> GetStudentStatisticsAsync(Guid userId, string period);
 }

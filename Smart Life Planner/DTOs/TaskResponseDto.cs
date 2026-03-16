@@ -7,5 +7,5 @@ public class TaskResponseDto
     public string Name { get; set; } = null!;
     public DateTime? Deadline { get; set; }
     public ModelsTaskStatus Status { get; set; } 
-    public Guid SubjectId { get; set; }
+    public Guid? SubjectId { get; set; }
 }

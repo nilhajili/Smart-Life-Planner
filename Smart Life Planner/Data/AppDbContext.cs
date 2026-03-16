@@ -30,7 +30,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Subject>()
             .HasMany(s => s.Tasks)
             .WithOne(t => t.Subject)
-            .HasForeignKey(t => t.SubjectId);
+            .HasForeignKey(t => t.SubjectId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<User>()
             .HasMany(u => u.Tasks)

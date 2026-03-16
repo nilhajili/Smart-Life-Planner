@@ -1,9 +1,55 @@
+import { useState } from "react";
 import planoraLogo from '../images/Planora-logo.png';
-import Register from './Register';
 
 export default function Login() {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please enter email and password!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5196/api/Auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Login success:", data);
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          alert("Login successful!");
+
+        }
+
+        setEmail("");
+        setPassword("");
+
+      } else {
+        alert(data.message || "Login failed");
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Server error");
+    }
+  };
+
   return (
     <div className="flex min-h-screen">
+    
       <div className="flex-1 bg-gradient-to-br from-indigo-200 via-green-200 to-purple-200 p-20 flex flex-col justify-center">
         <h1 className="text-5xl font-bold text-indigo-900 mb-10">
           Welcome Back. <br /> Continue your journey.<br /> Achieve your goals.
@@ -32,30 +78,39 @@ export default function Login() {
         </div>
       </div>
 
+
       <div className="flex-1 flex items-center justify-center bg-gray-50">
         <div className="bg-white p-10 rounded-xl shadow-lg w-[380px]">
+
           <h2 className="text-2xl font-semibold mb-6">
             Log in to your account
           </h2>
 
           <div className="space-y-4">
+
             <input
               type="email"
               placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
             />
 
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
             />
 
             <button
+              onClick={handleLogin}
               className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg font-medium"
             >
               Log In
             </button>
+
           </div>
 
           <div className="mt-6 text-center text-gray-500">
@@ -73,6 +128,7 @@ export default function Login() {
               Google
             </button>
           </div>
+
         </div>
       </div>
     </div>

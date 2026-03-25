@@ -23,12 +23,13 @@ namespace SmartLifePlanner.Controllers
             var result = await _studentService.AddTaskAsync(dto);
             return Ok(result);
         }
-
-       
+        
         [HttpPut("{taskId}")]
         public async Task<ActionResult<TaskResponseDto>> UpdateTask(Guid taskId, [FromBody] TaskRequestDto dto)
         {
             var result = await _studentService.UpdateTaskAsync(taskId, dto);
+         
+
             return Ok(result);
         }
         
@@ -37,6 +38,14 @@ namespace SmartLifePlanner.Controllers
         {
             var tasks = await _studentService.GetTasksAsync(userId);
             return Ok(tasks);
+        }
+        [HttpDelete("{taskid}")]
+        public async Task<IActionResult> DeleteTask(Guid taskId)
+        {
+            var success = await _studentService.DeleteTaskAsync(taskId);
+            if (!success) return NotFound(new { Message = "Task not found" });
+
+            return NoContent();
         }
     }
 }

@@ -7,7 +7,10 @@ public class Task
 {
     public Guid Id { get; set; }  
     public string Name { get; set; } = null!;
+    
+    public string Description { get; set; } = null!;
     public Guid? SubjectId { get; set; }
+    
 
     [JsonIgnore]   
     public Subject? Subject { get; set; } 

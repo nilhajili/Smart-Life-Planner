@@ -32,6 +32,7 @@ public class StudentService : IStudentService
         {
             Id = Guid.NewGuid(),
             Name = dto.Name,
+            Description = dto.Description,
             Deadline = dto.Deadline,
             Status = dto.Status,
             UserId = dto.UserId,
@@ -45,6 +46,7 @@ public class StudentService : IStudentService
         {
             Id = task.Id,
             Name = task.Name,
+            Description = task.Description,
             Deadline = task.Deadline,
             Status = task.Status,
             SubjectId = task.SubjectId
@@ -57,6 +59,7 @@ public class StudentService : IStudentService
         if (task == null) throw new Exception("Task not found");
 
         task.Name = dto.Name;
+        task.Description = dto.Description;
         task.Deadline = dto.Deadline;
         task.Status = dto.Status;
         task.SubjectId = dto.SubjectId;
@@ -67,6 +70,7 @@ public class StudentService : IStudentService
         {
             Id = task.Id,
             Name = task.Name,
+            Description = task.Description,
             Deadline = task.Deadline,
             Status = task.Status,
             SubjectId = task.SubjectId
@@ -81,6 +85,7 @@ public class StudentService : IStudentService
             {
                 Id = x.Id,
                 Name = x.Name,
+                Description = x.Description,
                 Deadline = x.Deadline,
                 Status = x.Status,
                 SubjectId = x.SubjectId
@@ -132,10 +137,12 @@ public class StudentService : IStudentService
         };
     }
 
-    public async Task<double> GetProgressAsync(Guid goalId)
+    public async Task<double> GetProgressAsync(Guid goalId, Guid subjectId)
     {
-        var goal = await _context.StudyGoals.FirstOrDefaultAsync(x => x.Id == goalId);
-        if (goal == null) throw new Exception("Goal not found");
+        var goal = await _context.StudyGoals
+            .FirstOrDefaultAsync(x => x.Id == goalId && x.SubjectId == subjectId);
+
+        if (goal == null) throw new Exception("Goal not found for this subject");
 
         return (double)goal.CurrentHours / goal.TargetHours * 100;
     }
@@ -209,6 +216,66 @@ public class StudentService : IStudentService
         {
             TaskStats = taskStats,
             StudyGoalStats = studyGoalStats
+        };
+        
+    }
+    public async Task<bool> DeleteTaskAsync(Guid taskId)
+    {
+        var task = await _context.Tasks
+            .FirstOrDefaultAsync(t => t.Id == taskId);
+
+        if (task == null) return false;
+
+        _context.Tasks.Remove(task);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+    public async Task<bool> DeleteSubjectAsync(Guid subjectId)
+    {
+        var subject = await _context.Subjects
+            .Include(s => s.Tasks)
+            .Include(s => s.StudyGoals)
+            .FirstOrDefaultAsync(s => s.Id == subjectId);
+
+        if (subject == null) return false;
+        
+        _context.Tasks.RemoveRange(subject.Tasks);
+        _context.StudyGoals.RemoveRange(subject.StudyGoals);
+        
+        _context.Subjects.Remove(subject);
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+    public async Task<bool> DeleteGoalAsync(Guid goalId)
+    {
+        var goal = await _context.StudyGoals.FindAsync(goalId);
+        if (goal == null) return false;
+
+        _context.StudyGoals.Remove(goal);
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<StudyGoalResponseDto> UpdateGoalAsync(Guid goalId, UpdateGoalDto dto)
+    {
+        var goal = await _context.StudyGoals.FindAsync(goalId);
+        if (goal == null) throw new Exception("Goal not found");
+
+        goal.CurrentHours = dto.CurrentHours;
+        goal.TargetHours = dto.TargetHours; 
+
+        await _context.SaveChangesAsync();
+
+        return new StudyGoalResponseDto
+        {
+            Id = goal.Id,
+            SubjectId = goal.SubjectId,
+            CurrentHours = goal.CurrentHours,
+            TargetHours = goal.TargetHours
         };
     }
 }

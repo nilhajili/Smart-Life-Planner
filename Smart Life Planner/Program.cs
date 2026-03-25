@@ -6,6 +6,7 @@ using SmartLifePlanner.Services;
 using SmartLifePlanner.Services.Interfaces;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 using SmartLifePlanner.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,7 +55,13 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 #endregion
-
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // Dövrü obyektləri serialize edərkən xəta verməməsi üçün
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true; // optional: daha oxunaqlı JSON üçün
+    });
 #region Swagger + JWT Support
 builder.Services.AddSwaggerGen(options =>
 {
@@ -66,7 +73,7 @@ builder.Services.AddSwaggerGen(options =>
 
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Enter: Bearer {your JWT token}",
+        Description = "Enter:  {your JWT token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,

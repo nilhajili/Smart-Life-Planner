@@ -145,6 +145,10 @@ namespace Smart_Life_Planner.Migrations
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -240,7 +244,7 @@ namespace Smart_Life_Planner.Migrations
 
             modelBuilder.Entity("SmartLifePlanner.Models.StudyGoal", b =>
                 {
-                    b.HasOne("SmartLifePlanner.Models.Subject", null)
+                    b.HasOne("SmartLifePlanner.Models.Subject", "Subject")
                         .WithMany("StudyGoals")
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -249,6 +253,8 @@ namespace Smart_Life_Planner.Migrations
                     b.HasOne("SmartLifePlanner.Models.User", "User")
                         .WithMany("StudyGoals")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Subject");
 
                     b.Navigation("User");
                 });

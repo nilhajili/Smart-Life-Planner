@@ -14,17 +14,40 @@ export default function Sidebar() {
 
   const activeClass = "bg-[#ded0f4] shadow-bottom-lg font-semibold";
 
+  const handleLogout = async () => {
+    try {
+      await api.post(
+        "/Auth/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+
+     
+      window.location.href = "/login";
+    }
+  };
+
   return (
     <div className="flex flex-col  ">
       <img
         src={planoraLogo}
-        className="shadow-lg  brightness-0"
+        className="  brightness-0"
       />
 
       <nav className="flex flex-col gap-2 mt-20">
         <div className=" ">
         <NavLink
           to="/dashboard"
+          end
           className={({ isActive }) =>
             `${linkClass} ${isActive ? activeClass : ""}flex items-center gap-3`
           }
@@ -35,7 +58,7 @@ export default function Sidebar() {
         </div>
 
         <NavLink
-          to="/subjects"
+          to="/dashboard/subjects"
           className={({ isActive }) =>
             `${linkClass} ${isActive ? activeClass : ""} flex items-center gap-3`
           }
@@ -45,7 +68,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink
-          to="/tasks"
+          to="/dashboard/tasks"
           className={({ isActive }) =>
             `${linkClass} ${isActive ? activeClass : ""} flex items-center gap-3`
           }
@@ -55,7 +78,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink
-          to="/statistics"
+          to="/dashboard/goals"
           className={({ isActive }) =>
             `${linkClass} ${isActive ? activeClass : ""} flex items-center gap-3`
           }
@@ -65,7 +88,7 @@ export default function Sidebar() {
         </NavLink>
 
         <NavLink
-          to="/profile"
+          to="/dashboard/settings"
           className={({ isActive }) =>
             `${linkClass} ${isActive ? activeClass : ""} flex items-center gap-3`
           }
@@ -76,7 +99,10 @@ export default function Sidebar() {
       </nav>
 
       <div className="mt-auto  pt-80 pb-10 ">
-        <button className="w-full text-white bg-[#330158] hover:bg-red-500 py-2 rounded-[1.5rem] flex items-center justify-center gap-2 font-semibold text-lg transition">
+       <button
+          onClick={handleLogout}
+          className="w-full text-white bg-[#7c78b8] hover:bg-red-500 py-2 rounded-[1.5rem] flex items-center justify-center gap-2 font-semibold text-lg transition"
+        >
           <IoMdExit className="text-2xl" />
           <span>Logout</span>
         </button>

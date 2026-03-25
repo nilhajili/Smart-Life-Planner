@@ -1,51 +1,49 @@
 import { useState } from "react";
 import planoraLogo from '../images/Planora-logo.png';
+import { useNavigate } from "react-router-dom"; 
+import api from "../api/axios"; 
 
 export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const navigate = useNavigate();
 
+  
   const handleLogin = async () => {
-    if (!email || !password) {
-      alert("Please enter email and password!");
-      return;
-    }
+  if (!email || !password) {
+    alert("Please enter email and password!");
+    return;
+  }
 
-    try {
-      const response = await fetch("http://localhost:5196/api/Auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
+  try {
+    const response = await api.post("/Auth/login", {
+      email: email,
+      password: password
+    });
 
-      const data = await response.json();
+    const data = response.data;
 
-      if (response.ok) {
-        console.log("Login success:", data);
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          alert("Login successful!");
+    console.log("Login success:", data);
+    localStorage.setItem("token", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("userId", data.userId);
+    localStorage.setItem("email", data.email);
+    navigate("/dashboard");
 
-        }
+    setEmail("");
+    setPassword("");
 
-        setEmail("");
-        setPassword("");
+  } catch (error) {
+    console.error("Error:", error);
 
-      } else {
-        alert(data.message || "Login failed");
-      }
-
-    } catch (error) {
-      console.error("Error:", error);
+    if (error.response) {
+      alert(error.response.data?.message || "Login failed");
+    } else {
       alert("Server error");
     }
-  };
+  }
+};
 
   return (
     <div className="flex min-h-screen">

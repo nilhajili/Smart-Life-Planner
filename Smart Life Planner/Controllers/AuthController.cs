@@ -63,4 +63,5 @@ public class AuthController : ControllerBase
         await _authService.RevokeRefreshTokenAsync(refreshToken);
         return Ok(new { message = "Logged out successfully" });
     }
+    
 }

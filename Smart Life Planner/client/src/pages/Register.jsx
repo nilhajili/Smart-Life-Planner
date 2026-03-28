@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; 
 import planoraLogo from "../images/Planora-logo.png";
 
 export default function Register() {
+  const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,6 +45,7 @@ export default function Register() {
         setEmail("");
         setPassword("");
         setRole("");
+        navigate("/login");
 
       } else {
         alert(data.message || "Register failed");
@@ -56,7 +59,7 @@ export default function Register() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="flex-1 bg-gradient-to-br from-indigo-200 via-green-200 to-purple-200 p-20 flex flex-col justify-center">
+      <div className="flex-1 bg-gradient-to-br from-[rgb(100,180,220)] via-[rgb(170,120,220)] to-[rgb(240,140,200)] p-20 flex flex-col justify-center">
 
         <h1 className="text-5xl font-bold text-indigo-900 mb-10">
           Plan your future. <br /> Track your progress.<br /> Achieve your goals.
@@ -99,7 +102,7 @@ export default function Register() {
               placeholder="Full name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
 
             <input
@@ -107,7 +110,7 @@ export default function Register() {
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
 
             <input
@@ -115,7 +118,7 @@ export default function Register() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -124,7 +127,7 @@ export default function Register() {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+                className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
               >
                 <option value="">Choose a role</option>
                 <option value="Student">Student</option>
@@ -135,7 +138,7 @@ export default function Register() {
 
             <button
               onClick={handleRegister}
-              className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg font-medium"
+              className="w-full bg-[#7c78b8] hover:bg-[#5b588d] text-white p-3 rounded-lg font-medium"
             >
               Sign Up
             </button>
@@ -143,22 +146,12 @@ export default function Register() {
           </div>
 
           <div className="mt-6 text-center text-gray-500">
-            or <a href="/login" className="text-green-500 hover:underline">
+            or <a href="/login" className="text-[#574cec]  hover:underline">
               log in
             </a>
           </div>
 
-          <div className="flex gap-3 mt-4">
-
-            <button className="flex-1 border rounded-lg p-2 hover:bg-gray-100">
-              Github
-            </button>
-
-            <button className="flex-1 border rounded-lg p-2 hover:bg-gray-100">
-              Google
-            </button>
-
-          </div>
+         
 
         </div>
 

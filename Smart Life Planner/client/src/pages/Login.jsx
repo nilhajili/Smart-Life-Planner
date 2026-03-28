@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen">
     
-      <div className="flex-1 bg-gradient-to-br from-indigo-200 via-green-200 to-purple-200 p-20 flex flex-col justify-center">
+      <div className="flex-1 bg-gradient-to-br from-[rgb(100,180,220)] via-[rgb(170,120,220)] to-[rgb(240,140,200)] p-20 flex flex-col justify-center">
         <h1 className="text-5xl font-bold text-indigo-900 mb-10">
           Welcome Back. <br /> Continue your journey.<br /> Achieve your goals.
         </h1>
@@ -91,7 +91,7 @@ export default function Login() {
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
 
             <input
@@ -99,12 +99,12 @@ export default function Login() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-green-400"
+              className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
 
             <button
               onClick={handleLogin}
-              className="w-full bg-green-500 hover:bg-green-600 text-white p-3 rounded-lg font-medium"
+              className="w-full bg-[#7c78b8] hover:bg-[#5b588d] text-white p-3 rounded-lg font-medium"
             >
               Log In
             </button>
@@ -112,20 +112,12 @@ export default function Login() {
           </div>
 
           <div className="mt-6 text-center text-gray-500">
-            or <a href="/register" className="text-green-500 hover:underline">
+            or <a href="/register" className="text-[#574cec]  hover:underline">
               register
             </a>
           </div>
 
-          <div className="flex gap-3 mt-4">
-            <button className="flex-1 border rounded-lg p-2 hover:bg-gray-100">
-              Github
-            </button>
-
-            <button className="flex-1 border rounded-lg p-2 hover:bg-gray-100">
-              Google
-            </button>
-          </div>
+          
 
         </div>
       </div>

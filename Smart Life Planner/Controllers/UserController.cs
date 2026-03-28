@@ -42,5 +42,15 @@ namespace SmartLifePlanner.Controllers
 
             return NoContent();
         }
+        [HttpPut("{id}/change-password")]
+        public async Task<IActionResult> ChangePassword(Guid id, [FromBody] ChangePasswordDto dto)
+        {
+            var result = await _userService.ChangePasswordAsync(id, dto.CurrentPassword, dto.NewPassword);
+
+            if (!result)
+                return BadRequest(new { Message = "Current password is incorrect" });
+
+            return Ok(new { Message = "Password updated successfully" });
+        }
     }
 }

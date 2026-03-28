@@ -86,4 +86,24 @@ public class UserService : IUserService
 
         return true;
     }
+    public async Task<bool> ChangePasswordAsync(Guid userId, string currentPassword, string newPassword)
+    {
+        var user = await _context.Users.FindAsync(userId);
+
+        if (user == null)
+            return false;
+        
+        bool isCorrect = BCrypt.Net.BCrypt.Verify(currentPassword, user.PasswordHash);
+
+        if (!isCorrect)
+            return false;
+        
+        string newHashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+
+        user.PasswordHash = newHashedPassword;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 }

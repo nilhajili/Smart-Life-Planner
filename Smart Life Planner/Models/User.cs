@@ -9,7 +9,7 @@ namespace SmartLifePlanner.Models
         public string FullName { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
-        public UserRole Role { get; set; } 
+        
         
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
         public ICollection<Task> Tasks { get; set; } = new List<Task>();
@@ -19,10 +19,5 @@ namespace SmartLifePlanner.Models
         
         public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
-    public enum UserRole
-    {
-        Student,
-        Worker,
-        Both
-    }
+    
 }

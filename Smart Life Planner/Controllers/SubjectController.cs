@@ -7,7 +7,7 @@ using SmartLifePlanner.DTOs;
 using SmartLifePlanner.Services;
 namespace SmartLifePlanner.Controllers
 {
-    [Authorize(Roles = "Student,Both")]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class SubjectController : ControllerBase

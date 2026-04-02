@@ -147,7 +147,7 @@ export default function Subjects() {
                   </div>
                 </div>
 
-                {/* Details Section */}
+            
                 {openSubjectId === subject.id && (
                   <div className="mt-4 px-2 text-sm">
                     {!detail ? (

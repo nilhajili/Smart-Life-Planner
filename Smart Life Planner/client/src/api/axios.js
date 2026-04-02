@@ -8,7 +8,6 @@ api.interceptors.request.use(config => {
   return config;
 });
 
-// 401 gəlsə refresh token ilə retry
 api.interceptors.response.use(
   response => response,
   async error => {

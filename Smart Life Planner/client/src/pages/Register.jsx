@@ -8,10 +8,10 @@ export default function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
+  
 
   const handleRegister = async () => {
-    if (!fullName || !email || !password || !role) {
+    if (!fullName || !email || !password ) {
       alert("Please fill all fields!");
       return;
     }
@@ -26,7 +26,7 @@ export default function Register() {
           fullName: fullName,
           email: email,
           password: password,
-          role: role
+          
         })
       });
 
@@ -44,7 +44,7 @@ export default function Register() {
         setFullName("");
         setEmail("");
         setPassword("");
-        setRole("");
+   
         navigate("/login");
 
       } else {
@@ -120,21 +120,7 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
             />
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Select Role
-              </label>
-              <select
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#574cec]"
-              >
-                <option value="">Choose a role</option>
-                <option value="Student">Student</option>
-                <option value="Worker">Worker</option>
-                <option value="Both">Both</option>
-              </select>
-            </div>
+            
 
             <button
               onClick={handleRegister}

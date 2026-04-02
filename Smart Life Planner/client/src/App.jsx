@@ -11,7 +11,7 @@ import DashboardLayout from "./components/DashboardLayout";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>-
+      <Routes>
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -6,7 +6,7 @@ using SmartLifePlanner.Services.Interfaces;
 
 namespace SmartLifePlanner.Controllers
 {
-    [Authorize(Roles = "Student,Both")]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class StudyGoalController : ControllerBase

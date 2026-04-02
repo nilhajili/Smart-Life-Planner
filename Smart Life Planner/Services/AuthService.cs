@@ -35,7 +35,7 @@ public class AuthService : IAuthService
             FullName = registerRequest.FullName,
             Email = registerRequest.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerRequest.Password),
-            Role = Enum.Parse<UserRole>(registerRequest.Role, true)
+            
         };
 
         _context.Users.Add(user);
@@ -124,7 +124,7 @@ public class AuthService : IAuthService
             RefreshTokenExpiresAt = refreshEntity.ExpiresAt,
             UserId = user.Id,
             Email = user.Email,
-            Roles = new List<string> { user.Role.ToString() }
+            
         };
     }
 
@@ -138,7 +138,7 @@ public class AuthService : IAuthService
         {
             new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Email, user.Email),
-            new(ClaimTypes.Role, user.Role.ToString()),
+            
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
